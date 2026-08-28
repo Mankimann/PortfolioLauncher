@@ -1,0 +1,27 @@
+name: Build native app
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: gradle/actions/setup-gradle@v6
+
+      - name: jlink Image bauen
+        run: ./gradlew jlink
+        shell: bash
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: PortfolioApp-${{ matrix.os }}
+          path: build/image

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+
+<!-- Wurzel ist ein StackPane, damit das Drop-Overlay ueber allem liegen kann.
+     Drag-Handler gehoeren auf diese Wurzel, nicht auf einzelne Karten. -->
+
+<StackPane fx:id="root" prefHeight="754.0" prefWidth="1280.0" stylesheets="@../css/portfolio.css" xmlns="http://javafx.com/javafx/25.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.manuelanker.app.controller.AppController">
+  <children>
+      <AnchorPane>
+         <children>
+          <Region layoutX="22.0" layoutY="28.0" styleClass="brand-dot" />
+          <Label layoutX="50.0" layoutY="1.0" prefHeight="63.0" prefWidth="74.0" styleClass="brand-label" text="Projekte">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="projectCount" layoutX="1151.0" layoutY="25.0" text="1" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="1167.0" layoutY="24.0" text="/" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="1182.0" layoutY="25.0" text="6" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+    <BorderPane fx:id="content">
+
+    <center>
+        <HBox fx:id="stage" alignment="CENTER" spacing="28.0">
+            <children>
+
+                <Button fx:id="prevButton" mnemonicParsing="false" onAction="#prevCard" styleClass="nav-button">
+                    <graphic>
+                        <SVGPath content="M14,2 L4,12 L14,22" strokeLineCap="ROUND" strokeLineJoin="ROUND" styleClass="chevron" />
+                    </graphic>
+                </Button>
+
+                <!-- Behälter für die jeweils sichtbare Karte.
+                     Der Include ist nur die Vorschau für den SceneBuilder; zur Laufzeit
+                     ersetzt du das Kind: cardSlot.getChildren().setAll(karte) -->
+                <StackPane fx:id="cardSlot">
+                    <children>
+                        <fx:include fx:id="projectCard" source="ProjectCard.fxml" />
+                    </children>
+                </StackPane>
+
+                <Button fx:id="nextButton" mnemonicParsing="false" onAction="#nextCard" styleClass="nav-button">
+                    <graphic>
+                        <SVGPath content="M4,2 L14,12 L4,22" strokeLineCap="ROUND" strokeLineJoin="ROUND" styleClass="chevron" />
+                    </graphic>
+                </Button>
+            </children>
+        </HBox>
+    </center>
+
+    <!-- Positionsanzeige -->
+    <bottom>
+        <HBox fx:id="tickBar" alignment="CENTER" spacing="6.0">
+            <padding><Insets bottom="34.0" top="14.0" /></padding>
+            <children>
+                <Region minHeight="0.0" prefHeight="0.0" prefWidth="42.0" styleClass="tick, tick-active" />
+                <Region styleClass="tick" />
+                <Region styleClass="tick" />
+                <Region styleClass="tick" />
+                <Region styleClass="tick" />
+                <Region styleClass="tick" />
+            </children>
+        </HBox>
+    </bottom>
+
+</BorderPane>
+    <StackPane fx:id="dropOverlay" mouseTransparent="true" styleClass="drop-overlay" visible="false">
+        <padding><Insets bottom="48.0" left="48.0" right="48.0" top="48.0" /></padding>
+        <children>
+            <VBox alignment="CENTER" spacing="16.0" styleClass="drop-overlay-frame">
+                <children>
+                    <SVGPath content="M12,4 L12,20 M4,12 L20,12" scaleX="1.6" scaleY="1.6" strokeLineCap="ROUND" styleClass="plus-mark" />
+                    <Label styleClass="dropzone-label" text="Bild loslassen, um ein Projekt anzulegen" />
+                    <Label styleClass="mono, dropzone-hint" text="PNG oder JPG" />
+                </children>
+            </VBox>
+        </children>
+    </StackPane>
+
+  </children>
+</StackPane>

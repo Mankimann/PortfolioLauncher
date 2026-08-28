@@ -1,0 +1,36 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+    id 'org.beryx.jlink' version '4.1.1'
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+javafx {
+    version = '21'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+dependencies {
+    implementation 'org.yaml:snakeyaml:2.6'
+}
+
+application {
+    mainClass = 'de.manuelanker.app.Main'
+    mainModule = 'Examples'
+}
+
+jlink {
+    forceMerge('snakeyaml')
+    launcher {
+        name = 'PortfolioApp'
+    }
+}

@@ -1,0 +1,9 @@
+build/
+/PortfolioApp
+.gradle/
+bin/
+yml/
+images/
+.settings/
+.classpath
+.project

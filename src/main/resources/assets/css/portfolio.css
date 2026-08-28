@@ -1,0 +1,370 @@
+/* portfolio.css  –  Farb- und Typo-Basis für die Portfolio-App
+   Farben sind als Looked-up Colors definiert und lassen sich hier zentral ändern. */
+
+.root {
+    -c-bg:        #14171d;
+    -c-surface:   #1d222b;
+    -c-surface-2: #262c37;
+    -c-line:      #2f3644;
+    -c-ink:       #e6e9ef;
+    -c-ink-dim:   #8a93a3;
+    -c-accent:    #3fd0c9;
+    -c-accent-hi: #57e0d9;
+    -c-amber:     #e8a33d;
+
+    -fx-font-family: "Inter", "Segoe UI", "DejaVu Sans", sans-serif;
+    -fx-background-color: radial-gradient(center 50% 42%, radius 65%, #1c2029 0%, #14171d 100%);
+}
+
+.mono {
+    -fx-font-family: "JetBrains Mono", "Fira Code", "DejaVu Sans Mono", monospace;
+}
+
+/* ---------- Kopfzeile ---------- */
+
+.brand-dot {
+    -fx-min-width: 8;  -fx-max-width: 8;
+    -fx-min-height: 8; -fx-max-height: 8;
+    -fx-background-radius: 4;
+    -fx-background-color: -c-accent;
+}
+
+.brand-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: -c-ink;
+}
+
+.counter {
+    -fx-font-size: 12px;
+    -fx-text-fill: -c-ink-dim;
+}
+
+/* ---------- Navigation ---------- */
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 10;
+    -fx-border-color: -c-line;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-min-width: 52;  -fx-max-width: 52;
+    -fx-min-height: 52; -fx-max-height: 52;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.nav-button:hover {
+    -fx-border-color: -c-accent;
+    -fx-background-color: rgba(63, 208, 201, 0.08);
+}
+
+.nav-button:pressed {
+    -fx-background-color: rgba(63, 208, 201, 0.16);
+}
+
+.nav-button:focused {
+    -fx-border-color: -c-accent;
+}
+
+.chevron {
+    -fx-fill: transparent;
+    -fx-stroke: -c-ink-dim;
+    -fx-stroke-width: 2;
+}
+
+.nav-button:hover .chevron {
+    -fx-stroke: -c-accent;
+}
+
+/* ---------- Karte ---------- */
+
+/* Palette hier noch einmal, damit die ausgelagerte Karte auch dann auflöst,
+   wenn sie ohne .root-Elternknoten geladen wird (Dialog, Vorschau, Tests). */
+.card {
+    -c-surface:   #1d222b;
+    -c-surface-2: #262c37;
+    -c-line:      #2f3644;
+    -c-ink:       #e6e9ef;
+    -c-ink-dim:   #8a93a3;
+    -c-accent:    #3fd0c9;
+    -c-accent-hi: #57e0d9;
+    -c-amber:     #e8a33d;
+
+    -fx-background-color: -c-surface;
+    -fx-background-radius: 16;
+    -fx-border-color: -c-line;
+    -fx-border-radius: 16;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.55), 34, 0.0, 0, 14);
+}
+
+/* schmaler Streifen links: Akzentmarke + laufender Index */
+.card-spine {
+    -fx-background-color: -c-surface-2;
+    -fx-background-radius: 16 0 0 16;
+}
+
+.spine-mark {
+    -fx-min-width: 3;  -fx-max-width: 3;
+    -fx-min-height: 40;
+    -fx-background-radius: 2;
+    -fx-background-color: -c-accent;
+}
+
+.spine-index {
+    -fx-font-size: 11px;
+    -fx-text-fill: -c-ink-dim;
+}
+
+/* Vorschaufläche: Bild sitzt mit Abstand in einem dunklen Rahmen,
+   dadurch braucht das ImageView selbst kein abgerundetes Clipping. */
+.card-media {
+    -fx-background-color: #0f1218;
+    -fx-background-radius: 10;
+    -fx-border-color: -c-line;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+}
+
+.media-placeholder {
+    -fx-font-size: 11px;
+    -fx-text-fill: #3a4250;
+}
+
+.card-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -c-ink;
+}
+
+.card-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: -c-ink-dim;
+    -fx-line-spacing: 4;
+}
+
+/* ---------- Reiter ---------- */
+
+.flat-tabs {
+    -fx-tab-min-height: 26;
+    -fx-tab-max-height: 26;
+    -fx-open-tab-animation: NONE;
+    -fx-close-tab-animation: NONE;
+}
+
+.flat-tabs > .tab-header-area {
+    -fx-padding: 0;
+}
+
+/* durchgehende Trennlinie unter der Reiterzeile */
+.flat-tabs > .tab-header-area > .tab-header-background {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent -c-line transparent;
+    -fx-border-width: 0 0 1 0;
+}
+
+.flat-tabs > .tab-header-area > .headers-region > .tab {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 2 18 8 0;
+}
+
+/* aktiver Reiter: nur ein Unterstrich, kein Kasten */
+.flat-tabs > .tab-header-area > .headers-region > .tab:selected {
+    -fx-border-color: transparent transparent -c-accent transparent;
+    -fx-border-width: 0 0 2 0;
+}
+
+.flat-tabs > .tab-header-area > .headers-region > .tab:selected > .focus-indicator {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}
+
+.flat-tabs .tab-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: -c-ink-dim;
+}
+
+.flat-tabs .tab:hover .tab-label,
+.flat-tabs .tab:selected .tab-label {
+    -fx-text-fill: -c-ink;
+}
+
+.flat-tabs > .tab-content-area {
+    -fx-background-color: transparent;
+}
+
+/* ---------- Chips ---------- */
+
+.chip {
+    -fx-background-color: -c-surface-2;
+    -fx-background-radius: 20;
+    -fx-padding: 4 10 4 10;
+    -fx-font-size: 11px;
+    -fx-text-fill: -c-ink-dim;
+}
+
+.chip-active {
+    -fx-background-color: rgba(232, 163, 61, 0.14);
+    -fx-text-fill: -c-amber;
+}
+
+/* ---------- Buttons ---------- */
+
+.btn-primary {
+    -fx-background-color: -c-accent;
+    -fx-background-radius: 8;
+    -fx-text-fill: #0d1116;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 18 10 18;
+    -fx-cursor: hand;
+}
+
+.btn-primary:hover  { -fx-background-color: -c-accent-hi; }
+.btn-primary:pressed { -fx-background-color: #2fb5af; }
+
+.btn-ghost {
+    -fx-background-color: transparent;
+    -fx-background-radius: 8;
+    -fx-border-color: -c-line;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-text-fill: -c-ink;
+    -fx-font-size: 13px;
+    -fx-padding: 10 18 10 18;
+    -fx-cursor: hand;
+}
+
+.btn-ghost:hover {
+    -fx-border-color: -c-accent;
+    -fx-text-fill: -c-accent;
+}
+
+.button:focused {
+    -fx-effect: dropshadow(gaussian, rgba(63, 208, 201, 0.45), 12, 0.0, 0, 0);
+}
+
+/* ---------- Positionsanzeige ---------- */
+
+.tick {
+    -fx-min-width: 22;  -fx-max-width: 22;
+    -fx-min-height: 2;  -fx-max-height: 2;
+    -fx-background-radius: 1;
+    -fx-background-color: -c-line;
+}
+
+.tick-active {
+    -fx-min-width: 42;  -fx-max-width: 42;
+    -fx-background-color: -c-accent;
+}
+
+/* ---------- Eingabefelder ---------- */
+
+.field-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: -c-ink-dim;
+}
+
+.field {
+    -fx-background-color: #171b22;
+    -fx-background-radius: 8;
+    -fx-border-color: -c-line;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-text-fill: -c-ink;
+    -fx-prompt-text-fill: #5a6373;
+    -fx-highlight-fill: rgba(63, 208, 201, 0.28);
+    -fx-font-size: 13px;
+    -fx-padding: 8 12 8 12;
+}
+
+.field:focused {
+    -fx-border-color: -c-accent;
+}
+
+/* TextArea rendert den Text in einer eigenen .content-Region -
+   ohne diese beiden Regeln bleibt darunter der helle Modena-Kasten sichtbar. */
+.text-area.field {
+    -fx-padding: 0;
+}
+
+.text-area.field .content {
+    -fx-background-color: #171b22;
+    -fx-background-radius: 8;
+    -fx-padding: 8 12 8 12;
+}
+
+.text-area.field .scroll-pane,
+.text-area.field .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.field-error {
+    -fx-font-size: 11px;
+    -fx-text-fill: #e2686a;
+    -fx-padding: 6 0 0 0;
+}
+
+.drop-overlay {
+    -fx-background-color: rgba(15, 18, 24, 0.86);
+}
+
+.drop-overlay-frame {
+    -fx-background-color: rgba(63, 208, 201, 0.05);
+    -fx-background-radius: 14;
+    -fx-border-color: -c-accent;
+    -fx-border-radius: 14;
+    -fx-border-width: 2;
+    -fx-border-style: segments(9, 9) line-cap round;
+}
+
+/* ---------- Ablagefläche der leeren Karte ---------- */
+
+.dropzone {
+    -fx-background-color: #0f1218;
+    -fx-background-radius: 10;
+    -fx-border-color: -c-line;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-border-style: segments(7, 7) line-cap round;
+}
+
+/* im Controller beim DragOver zusätzlich setzen, beim DragExited wieder entfernen */
+.drop-active {
+    -fx-border-color: -c-accent;
+    -fx-background-color: rgba(63, 208, 201, 0.06);
+}
+
+.plus-mark {
+    -fx-fill: transparent;
+    -fx-stroke: -c-line;
+    -fx-stroke-width: 2;
+}
+
+.dropzone:hover .plus-mark,
+.drop-active .plus-mark {
+    -fx-stroke: -c-accent;
+}
+
+.dropzone-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: -c-ink-dim;
+}
+
+.dropzone-hint {
+    -fx-font-size: 11px;
+    -fx-text-fill: #4a5364;
+}
+
+/* ---------- Löschen ---------- */
+
+.btn-danger {
+    -fx-text-fill: -c-ink-dim;
+}
+
+.btn-danger:hover {
+    -fx-border-color: #a33f41;
+    -fx-text-fill: #e2686a;
+}

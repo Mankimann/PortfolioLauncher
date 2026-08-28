@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="4.0" prefWidth="400.0" stylesheets="@../css/portfolio.css"
+      xmlns="http://javafx.com/javafx/25.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="de.manuelanker.app.controller.CardEditorController">
+    <padding><Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/></padding>
+    <children>
+
+        <StackPane fx:id="editMedia" styleClass="card-media" minHeight="150.0" maxHeight="150.0">
+            <children>
+                <Label text="preview.png" styleClass="mono, media-placeholder"/>
+                <ImageView fx:id="previewImage" fitWidth="360.0" fitHeight="150.0"
+                           preserveRatio="true" pickOnBounds="true"/>
+            </children>
+        </StackPane>
+
+        <Label text="Titel" styleClass="field-label">
+            <VBox.margin><Insets top="16.0" bottom="4.0"/></VBox.margin>
+        </Label>
+        <TextField fx:id="titleField" styleClass="field" promptText="Chunk-Engine"/>
+
+        <Label text="Status" styleClass="field-label">
+            <VBox.margin><Insets top="12.0" bottom="4.0"/></VBox.margin>
+        </Label>
+        <TextField fx:id="statusField" styleClass="field" promptText="In Arbeit"/>
+
+        <Label text="Beschreibung" styleClass="field-label">
+            <VBox.margin><Insets top="12.0" bottom="4.0"/></VBox.margin>
+        </Label>
+        <TextArea fx:id="descField" styleClass="field" wrapText="true"
+                  prefRowCount="3" minHeight="76.0" prefHeight="76.0"
+                  promptText="Was das Projekt macht, in zwei Saetzen."/>
+
+        <Label text="Tech-Stack, mit Komma getrennt" styleClass="field-label">
+            <VBox.margin><Insets top="12.0" bottom="4.0"/></VBox.margin>
+        </Label>
+        <TextField fx:id="techField" styleClass="field" promptText="Java 21, LibGDX, Lua"/>
+
+        <Label text="Startbefehl" styleClass="field-label">
+            <VBox.margin><Insets top="12.0" bottom="4.0"/></VBox.margin>
+        </Label>
+        <TextField fx:id="runCommandField" styleClass="field" promptText="./nob &amp;&amp; ./build/game"/>
+
+        <Label text="Quellcode-Pfad" styleClass="field-label">
+            <VBox.margin><Insets top="12.0" bottom="4.0"/></VBox.margin>
+        </Label>
+        <TextField fx:id="codePathField" styleClass="field" promptText="/home/user/projekt"/>
+
+        <CheckBox fx:id="showCodeCheck" text="Bearbeiten-Button zeigt Quellcode statt Karte zu bearbeiten">
+            <VBox.margin><Insets top="12.0"/></VBox.margin>
+        </CheckBox>
+
+        <Label fx:id="editError" styleClass="field-error" visible="false" managed="false"
+               text="Titel darf nicht leer sein."/>
+
+        <Region VBox.vgrow="ALWAYS" minHeight="14.0"/>
+
+        <HBox spacing="10.0">
+            <children>
+                <Button fx:id="saveButton" text="Speichern" onAction="#onSave"
+                        styleClass="btn-primary" mnemonicParsing="false"/>
+                <Button fx:id="cancelButton" text="Verwerfen" onAction="#onCancel"
+                        styleClass="btn-ghost" mnemonicParsing="false"/>
+            </children>
+        </HBox>
+
+    </children>
+</VBox>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Projektkarte mit drei Zuständen in einem StackPane:
+       viewPane   - fertiges Projekt
+       editPane   - Eingabemaske
+       emptyPane  - leere Karte am Ende, dauerhaft als Drop-Ziel aktiv
+     Genau ein Pane ist sichtbar; die anderen beiden auf visible=false UND managed=false,
+     sonst rechnet der StackPane ihre Höhe weiter mit ein. -->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+<HBox styleClass="card" maxWidth="480.0" maxHeight="640.0"
+      stylesheets="@../css/portfolio.css"
+      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="de.manuelanker.app.controller.CardController">
+    <children>
+
+        <VBox fx:id="spine" styleClass="card-spine" alignment="CENTER" minWidth="42.0" maxWidth="42.0">
+            <padding><Insets top="22.0" bottom="22.0"/></padding>
+            <children>
+                <Region fx:id="spineMark" styleClass="spine-mark"/>
+                <Region VBox.vgrow="ALWAYS"/>
+                <Label fx:id="indexLabel" text="02" styleClass="mono, spine-index"/>
+            </children>
+        </VBox>
+
+        <StackPane fx:id="stateStack" HBox.hgrow="ALWAYS">
+            <children>
+                <VBox fx:id="viewPane" spacing="6.0">
+                    <padding><Insets top="18.0" right="20.0" bottom="20.0" left="20.0"/></padding>
+                    <children>
+
+                        <StackPane fx:id="viewMedia" styleClass="card-media" minHeight="210.0" maxHeight="210.0">
+                            <children>
+                                <Label text="preview.png" styleClass="mono, media-placeholder"/>
+                                <ImageView fx:id="previewImage" fitWidth="360.0" fitHeight="180.0"
+                                           preserveRatio="true" pickOnBounds="true"/>
+                            </children>
+                        </StackPane>
+
+                        <HBox alignment="BOTTOM_LEFT" spacing="12.0">
+                            <VBox.margin><Insets top="16.0" bottom="6.0"/></VBox.margin>
+                            <children>
+                                <Label fx:id="titleLabel" text="Chunk-Engine" styleClass="card-title"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Label fx:id="statusChip" text="In Arbeit" styleClass="chip, chip-active"/>
+                            </children>
+                        </HBox>
+
+                        <TabPane fx:id="detailTabs" styleClass="flat-tabs"
+                                 tabClosingPolicy="UNAVAILABLE"
+                                 minHeight="150.0" prefHeight="150.0">
+                            <tabs>
+                                <Tab text="Beschreibung">
+                                    <content>
+                                        <VBox>
+                                            <padding><Insets top="14.0"/></padding>
+                                            <children>
+                                                <Label fx:id="descLabel" wrapText="true" styleClass="card-text"
+                                                       text="2D-Engine mit GPU-Instancing und Lua-Scripting für die Spiellogik."/>
+                                            </children>
+                                        </VBox>
+                                    </content>
+                                </Tab>
+                                <Tab text="Tech-Stack">
+                                    <content>
+                                        <VBox>
+                                            <padding><Insets top="14.0"/></padding>
+                                            <children>
+                                                <FlowPane fx:id="techFlow" hgap="8.0" vgap="8.0"/>
+                                            </children>
+                                        </VBox>
+                                    </content>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+
+                        <HBox spacing="10.0">
+                            <VBox.margin><Insets top="4.0"/></VBox.margin>
+                            <children>
+                                <Button fx:id="openButton" text="Projekt öffnen" onAction="#onOpenClicked"
+                                        styleClass="btn-primary" mnemonicParsing="false"/>
+                                <Button fx:id="editButton" text="Bearbeiten" onAction="#onEditClicked"
+                                        styleClass="btn-ghost" mnemonicParsing="false"/>
+                            </children>
+                        </HBox>
+
+                    </children>
+                </VBox>
+
+                <!-- ============ Zustand 2: Eingabemaske ============ -->
+                <VBox fx:id="editPane" spacing="4.0" visible="false" managed="false">
+                    <padding><Insets top="18.0" right="20.0" bottom="20.0" left="20.0"/></padding>
+                    <children>
+
+                        <!-- auch hier Drop-Ziel: Bild während des Bearbeitens tauschen -->
+                        <StackPane fx:id="editMedia" styleClass="card-media" minHeight="150.0" maxHeight="150.0">
+                            <children>
+                                <Label fx:id="editMediaHint" text="Bild hierher ziehen"
+                                       styleClass="mono, media-placeholder"/>
+                                <ImageView fx:id="editPreviewImage" fitWidth="360.0" fitHeight="126.0"
+                                           preserveRatio="true" pickOnBounds="true"/>
+                            </children>
+                        </StackPane>
+
+                        <Label text="Titel" styleClass="field-label">
+                            <VBox.margin><Insets top="16.0" bottom="4.0"/></VBox.margin>
+                        </Label>
+                        <TextField fx:id="titleField" styleClass="field" promptText="Chunk-Engine"/>
+
+                        <Label text="Status" styleClass="field-label">
+                            <VBox.margin><Insets top="12.0" bottom="4.0"/></VBox.margin>
+                        </Label>
+                        <TextField fx:id="statusField" styleClass="field" promptText="In Arbeit"/>
+
+                        <Label text="Beschreibung" styleClass="field-label">
+                            <VBox.margin><Insets top="12.0" bottom="4.0"/></VBox.margin>
+                        </Label>
+                        <TextArea fx:id="descField" styleClass="field" wrapText="true"
+                                  prefRowCount="3" minHeight="76.0" prefHeight="76.0"
+                                  promptText="Was das Projekt macht, in zwei Sätzen."/>
+
+                        <Label text="Tech-Stack, mit Komma getrennt" styleClass="field-label">
+                            <VBox.margin><Insets top="12.0" bottom="4.0"/></VBox.margin>
+                        </Label>
+                        <TextField fx:id="techField" styleClass="field" promptText="Java 21, LibGDX, Lua"/>
+
+                        <Label fx:id="editError" styleClass="field-error" visible="false" managed="false"
+                               text="Titel darf nicht leer sein."/>
+
+                        <Region VBox.vgrow="ALWAYS" minHeight="14.0"/>
+
+                        <HBox spacing="10.0">
+                            <children>
+                                <Button fx:id="saveButton" text="Speichern"
+                                        styleClass="btn-primary" mnemonicParsing="false"/>
+                                <Button fx:id="cancelButton" text="Verwerfen"
+                                        styleClass="btn-ghost" mnemonicParsing="false"/>
+                                <Region HBox.hgrow="ALWAYS"/>
+                                <Button fx:id="deleteButton" text="Löschen"
+                                        styleClass="btn-ghost, btn-danger" mnemonicParsing="false"/>
+                            </children>
+                        </HBox>
+
+                    </children>
+                </VBox>
+
+                <!-- ============ Zustand 3: leere Karte ============ -->
+                <VBox fx:id="emptyPane" alignment="CENTER" spacing="14.0" visible="false" managed="false">
+                    <padding><Insets top="20.0" right="20.0" bottom="20.0" left="20.0"/></padding>
+                    <children>
+                        <StackPane fx:id="dropZone" styleClass="dropzone" VBox.vgrow="ALWAYS">
+                            <children>
+                                <VBox alignment="CENTER" spacing="12.0">
+                                    <children>
+                                        <SVGPath content="M12,4 L12,20 M4,12 L20,12" styleClass="plus-mark"
+                                                 strokeLineCap="ROUND"/>
+                                        <Label text="Bild hierher ziehen" styleClass="dropzone-label"/>
+                                        <Label text="oder leer anlegen" styleClass="mono, dropzone-hint"/>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </StackPane>
+                        <Button fx:id="createButton" text="Projekt anlegen"
+                                styleClass="btn-ghost" mnemonicParsing="false" maxWidth="Infinity"/>
+                    </children>
+                </VBox>
+
+            </children>
+        </StackPane>
+    </children>
+</HBox>

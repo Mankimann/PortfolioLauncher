@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import de.manuelanker.app.toolbox.OSDisk;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
@@ -67,9 +68,8 @@ public class CardController implements Initializable
 		}
 
 		try {
-			String os = System.getProperty("os.name").toLowerCase();
 			ProcessBuilder builder;
-			if (os.contains("win")) {
+			if (OSDisk.isWindows()) {
 				builder = new ProcessBuilder("cmd.exe", "/c", runCommand);
 			} else {
 				builder = new ProcessBuilder("/bin/sh", "-c", runCommand);
